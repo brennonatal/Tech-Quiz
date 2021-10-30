@@ -11,6 +11,8 @@
 		050E7F09272CA04500A8139B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050E7F08272CA04500A8139B /* ContentView.swift */; };
 		050E7F0B272CA05600A8139B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 050E7F0A272CA05600A8139B /* Assets.xcassets */; };
 		050E7F0E272CA05600A8139B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 050E7F0D272CA05600A8139B /* Preview Assets.xcassets */; };
+		050E7F15272CEFFD00A8139B /* QuestionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050E7F14272CEFFC00A8139B /* QuestionsView.swift */; };
+		050E7F19272D819900A8139B /* Questions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050E7F18272D819900A8139B /* Questions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,8 @@
 		050E7F08272CA04500A8139B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		050E7F0A272CA05600A8139B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		050E7F0D272CA05600A8139B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		050E7F14272CEFFC00A8139B /* QuestionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsView.swift; sourceTree = "<group>"; };
+		050E7F18272D819900A8139B /* Questions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Questions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +59,8 @@
 				050E7F08272CA04500A8139B /* ContentView.swift */,
 				050E7F0A272CA05600A8139B /* Assets.xcassets */,
 				050E7F0C272CA05600A8139B /* Preview Content */,
+				050E7F14272CEFFC00A8139B /* QuestionsView.swift */,
+				050E7F18272D819900A8139B /* Questions.swift */,
 			);
 			path = "Tech-Quiz";
 			sourceTree = "<group>";
@@ -137,6 +143,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				050E7F15272CEFFD00A8139B /* QuestionsView.swift in Sources */,
+				050E7F19272D819900A8139B /* Questions.swift in Sources */,
 				050E7F09272CA04500A8139B /* ContentView.swift in Sources */,
 				050E7F07272CA04500A8139B /* Tech_QuizApp.swift in Sources */,
 			);

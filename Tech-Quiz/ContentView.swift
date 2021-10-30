@@ -42,14 +42,19 @@ struct ContentView: View {
                         }
                         .navigationBarTitle("Tech Quiz")
                     }}
+                
                 Button(action: {
                     print("ok")
                 }) {
-                    Text("I'm ready")
-                        .font(.largeTitle)
-                        .bold()
+                    NavigationLink(destination: QuestionsView()) {
+                        Text("I'm ready")
+                            .font(.largeTitle)
+                            .bold()
+                    }
+                    
                 }
                 .frame(width: 200, height: 50)
+                
                 .padding()
                 .foregroundColor(.green)
                 .overlay(
