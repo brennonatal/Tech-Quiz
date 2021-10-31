@@ -13,13 +13,30 @@ struct ContentView: View {
     @State private var levelIndex = 0
     var levelOptions = ["Easy", "Medium",  "Hard"]
     @State private var categoryIndex = 0
-    var categoryOptions = ["Any Category", "General Knowledge", "Entertainment: Books",
-                           "Entertainment: Film", "Entertainment: Music",
-                           "Entertainment: Musicals & Theatres", "Entertainment: Television",
-                           "Entertainment: Video Games", "Entertainment: Board Games", "Science & Nature",
-                           "Science: Computers", "Science: Mathematics", "Mythology", "Sports", "Geography",
-                           "History", "Politics", "Art", "Celebrities", "Animals", "Vehicles", "Entertainment: Comics",
-                           "Science: Gadgets", "Entertainment: Japanese Anime & Manga",
+    var categoryOptions = ["Any Category",
+                           "General Knowledge",
+                           "Entertainment: Books",
+                           "Entertainment: Film",
+                           "Entertainment: Music",
+                           "Entertainment: Musicals & Theatres",
+                           "Entertainment: Television",
+                           "Entertainment: Video Games",
+                           "Entertainment: Board Games",
+                           "Science & Nature",
+                           "Science: Computers",
+                           "Science: Mathematics",
+                           "Mythology",
+                           "Sports",
+                           "Geography",
+                           "History",
+                           "Politics",
+                           "Art",
+                           "Celebrities",
+                           "Animals",
+                           "Vehicles",
+                           "Entertainment: Comics",
+                           "Science: Gadgets",
+                           "Entertainment: Japanese Anime & Manga",
                            "Entertainment: Cartoon & Animations"]
     
     var body: some View {
@@ -44,7 +61,9 @@ struct ContentView: View {
                     }}
                 
                 Button(action: {
-                    print("ok")
+//                    getting questions 
+//                    let api = Api(level: levelOptions[levelIndex], category: categoryIndex + 8)
+//                    api.loadQuestions()
                 }) {
                     NavigationLink(destination: QuestionsView()) {
                         Text("I'm ready")
@@ -71,9 +90,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
-            .preferredColorScheme(.dark)
-        
         ContentView()
             .preferredColorScheme(.light)
     }
