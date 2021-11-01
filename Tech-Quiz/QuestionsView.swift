@@ -7,28 +7,50 @@
 
 import SwiftUI
 
+
+
+
 struct LevelView: View {
     var body: some View {
         HStack{
             let shape = RoundedRectangle(cornerRadius: 20)
                 .stroke(lineWidth: 3)
                 .frame(width: 800, height: 80, alignment: .top)
-            ZStack{
+            VStack{
                 
-                shape
-                Text("Level")
-                    .font(.largeTitle)
-                    .foregroundColor(.mint)
+                ZStack{
+                    shape
+                    Text("Difficulty")
+                        .font(.largeTitle)
+                        .foregroundColor(.mint)
+                }
+                VStack{
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(.gray)
+                        Text("Question")
+                            .font(.largeTitle)
+                            .foregroundColor(.mint)
+                        
+                        
+                    }
+                }
+                
+                
             }
             
         }
-        
     }
     
 }
 
+
+
 struct QuestionsView: View {
-    @State var isBool = true
+    @State var isBool = false
+    @State var choices = ["A","B","C","D"]
+    
+    @State var boolChoices = ["True","False"]
     var body: some View {
         
         VStack{
@@ -39,22 +61,25 @@ struct QuestionsView: View {
             if isBool{
                 QuestionCardView(choice: "True", rightAns:true)
                 QuestionCardView(choice: "False", rightAns:false)
+                
             } else{
-            QuestionCardView(choice: "A", rightAns:true)
-            QuestionCardView(choice: "B", rightAns:false)
-            QuestionCardView(choice: "C", rightAns:false)
-            QuestionCardView(choice: "D", rightAns:false)
+                
+                QuestionCardView(choice: "A", rightAns:true)
+                QuestionCardView(choice: "B", rightAns:false)
+                QuestionCardView(choice: "C", rightAns:false)
+                QuestionCardView(choice: "D", rightAns:false)
             }
             
             Spacer()
             
         }.padding()
         
-        
-        
     }
     
 }
+
+
+
 
 
 struct QuestionCardView: View {
@@ -93,7 +118,7 @@ struct QuestionCardView: View {
     
     struct QuestionsView_Previews: PreviewProvider {
         static var previews: some View {
-           
+            
             QuestionsView()
                 .preferredColorScheme(.dark)
             
@@ -104,3 +129,5 @@ struct QuestionCardView: View {
     }
     
 }
+
+
