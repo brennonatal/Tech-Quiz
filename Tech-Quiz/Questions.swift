@@ -21,7 +21,8 @@ struct Question: Codable {
     let incorrect_answers : [String]
 }
 
-class Api {
+class Api{
+
     let baseUrl : String = "https://opentdb.com/api.php?amount=10"
     var level: String? = nil
     var category: Int? = nil

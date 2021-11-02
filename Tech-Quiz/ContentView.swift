@@ -12,7 +12,7 @@ struct ContentView: View {
     @State var username: String = ""
     @State private var levelIndex = 0
     var levelOptions = ["Easy", "Medium",  "Hard"]
-    @State private var categoryIndex = 0
+    @State var categoryIndex = 0
     var categoryOptions = ["Any Category",
                            "General Knowledge",
                            "Entertainment: Books",
