@@ -13,6 +13,7 @@
 		050E7F0E272CA05600A8139B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 050E7F0D272CA05600A8139B /* Preview Assets.xcassets */; };
 		050E7F15272CEFFD00A8139B /* QuestionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050E7F14272CEFFC00A8139B /* QuestionsView.swift */; };
 		050E7F19272D819900A8139B /* Questions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050E7F18272D819900A8139B /* Questions.swift */; };
+		6AA67D8C2732CADE00732705 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA67D8B2732CADE00732705 /* StartView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		050E7F0D272CA05600A8139B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		050E7F14272CEFFC00A8139B /* QuestionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsView.swift; sourceTree = "<group>"; };
 		050E7F18272D819900A8139B /* Questions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Questions.swift; sourceTree = "<group>"; };
+		6AA67D8B2732CADE00732705 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 		050E7F05272CA04500A8139B /* Tech-Quiz */ = {
 			isa = PBXGroup;
 			children = (
+				6AA67D8B2732CADE00732705 /* StartView.swift */,
 				050E7F06272CA04500A8139B /* Tech_QuizApp.swift */,
 				050E7F08272CA04500A8139B /* ContentView.swift */,
 				050E7F0A272CA05600A8139B /* Assets.xcassets */,
@@ -144,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				050E7F15272CEFFD00A8139B /* QuestionsView.swift in Sources */,
+				6AA67D8C2732CADE00732705 /* StartView.swift in Sources */,
 				050E7F19272D819900A8139B /* Questions.swift in Sources */,
 				050E7F09272CA04500A8139B /* ContentView.swift in Sources */,
 				050E7F07272CA04500A8139B /* Tech_QuizApp.swift in Sources */,

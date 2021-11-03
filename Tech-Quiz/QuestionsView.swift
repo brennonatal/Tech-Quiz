@@ -123,16 +123,15 @@ struct QuestionsView: View {
             
         }
         
-        struct QuestionsView_Previews: PreviewProvider {
-            static var previews: some View {
-                
-                QuestionsView()
-                    .preferredColorScheme(.dark)
-                
-            }
-            
-        }
-        
     }
+struct QuestionsView_Previews: PreviewProvider {
+    static var previews: some View {
+                
+        QuestionsView()
+            .preferredColorScheme(.dark)
+                
+        }
+                
+    }
+            
 }
-

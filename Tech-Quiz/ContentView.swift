@@ -40,7 +40,7 @@ struct ContentView: View {
                            "Entertainment: Cartoon & Animations"]
     
     var body: some View {
-        NavigationView {
+        NavigationView { 
             ZStack {
                 Form {
                     TextField("Your name", text: $username)

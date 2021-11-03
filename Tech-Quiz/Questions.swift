@@ -13,6 +13,7 @@ struct QuestionsResult: Codable {
     let results: [Question]
 }
 
+
 struct Question: Codable{
 //  var id : Int = 0
     let category : String
