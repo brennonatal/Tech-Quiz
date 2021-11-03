@@ -6,13 +6,15 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct QuestionsResult: Codable {
     let response_code: Int
     let results: [Question]
 }
 
-struct Question: Codable {
+struct Question: Codable{
+//  var id : Int = 0
     let category : String
     let type : String
     let difficulty: String
@@ -21,40 +23,65 @@ struct Question: Codable {
     let incorrect_answers : [String]
 }
 
-class Api{
-
-    let baseUrl : String = "https://opentdb.com/api.php?amount=10"
-    var level: String? = nil
-    var category: Int? = nil
+struct Answer: Codable, Identifiable {
+    var id : Int = 0
+    let title : String
+    let isCorrect: Bool
     
-    init(level: String, category: Int) {
-        self.level = level.lowercased()
-        self.category = category
+    init(title: String, isCorrect: Bool) {
+        self.title = title
+        self.isCorrect = isCorrect
+    }
+}
+
+
+class Game {
+    
+    let baseUrl : String = "https://opentdb.com/api.php?amount=1"
+    var difficulty: String = "easy"
+    var category: Int = 8
+    
+//    PASS THIS VARIABLES INTO VIEW
+    //    var username: String = "player42"
+    //    var score: Int = 0
+    //    @State var questions : [Question] = []
+    //    var questionNumber : Int = 0
+    
+    init(difficulty: String, category: Int) {
+        self.difficulty = difficulty.lowercased()
+        self.category = category + 8
     }
     
     func buildQuery() -> String {
-//        fix conditions
-        if let difficulty = self.level, let category = self.category {
+        if self.category > 8 {
             return "\(self.baseUrl)&category=\(category)&difficulty=\(difficulty)"
         }
-        if let difficulty = self.level{
-            return "\(self.baseUrl)&difficulty=\(difficulty)"
-        }
-        if let category = self.category {
-            return "\(self.baseUrl)&category=\(category)"
-        }
-        return self.baseUrl
-        
+        return "\(self.baseUrl)&difficulty=\(self.difficulty)"
     }
     
-    func loadQuestions() {
+    func loadQuestions(completion: @escaping ([Question]) -> ()) {
         guard let url = URL(string: self.buildQuery()) else { return }
         
         URLSession.shared.dataTask(with: url) { (data, _, _) in
             let result = try! JSONDecoder().decode(QuestionsResult.self, from: data!)
-            print(result)
+            
+            DispatchQueue.main.async {
+                completion(result.results)
+            }
         }
         .resume()
+    }
+}
 
+func getAnswers(question: Question, completion: @escaping ([Answer]) -> ()) {
+    var answers : [Answer] = []
+    answers.append(Answer(title: question.correct_answer, isCorrect: true))
+    for answer in question.incorrect_answers {
+        answers.append(Answer(title: answer, isCorrect: false))
+    }
+    answers = answers.shuffled()
+    
+    DispatchQueue.main.async {
+        completion(answers)
     }
 }

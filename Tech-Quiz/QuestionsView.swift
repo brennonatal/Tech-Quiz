@@ -8,8 +8,6 @@
 import SwiftUI
 
 
-
-
 struct LevelView: View {
     var body: some View {
         HStack{
@@ -45,16 +43,15 @@ struct LevelView: View {
 }
 
 
-
 struct QuestionsView: View {
     @State var isBool = false
     @State var choices = ["A","B","C","D"]
-    
+    @State var questions : [Question] = []
+    @State var answers : [Answer] = []
     @State var boolChoices = ["True","False"]
     var body: some View {
         
         VStack{
-            
             LevelView()
                 .padding(30)
             Spacer()
@@ -63,7 +60,10 @@ struct QuestionsView: View {
                 QuestionCardView(choice: "False", rightAns:false)
                 
             } else{
-                
+//                UNDER DEVELOPMENT
+//                List(answers) { answer in
+//                    QuestionCardView(choice: answer.title, rightAns: answer.isCorrect)
+//                }
                 QuestionCardView(choice: "A", rightAns:true)
                 QuestionCardView(choice: "B", rightAns:false)
                 QuestionCardView(choice: "C", rightAns:false)
@@ -72,62 +72,67 @@ struct QuestionsView: View {
             
             Spacer()
             
-        }.padding()
+        }
+        .padding()
+        .onAppear {
+            Game(difficulty: "easy", category: 1).loadQuestions { (question) in
+                self.questions = questions
+                
+            }
+//            UNDER DEVELOPMENT
+//            getAnswers(question: self.questions[0]) { answers in
+//                self.answers = answers
+//            }
+            
+        }
         
     }
     
-}
-
-
-
-
-
-struct QuestionCardView: View {
-    var choice: String
-    @State var rightAns: Bool
-    @State var cardUp: Bool = false
-    var body: some View {
-        ZStack{
-            let shape  = RoundedRectangle(cornerRadius: 20)
-                .stroke(lineWidth: 3)
-                .frame(width: 320, height: 90, alignment: .top)
-            if cardUp {
-                
-                
-                if rightAns{
-                    Text("Right Answer!!")
-                    shape.foregroundColor(.green)
+    
+    struct QuestionCardView: View {
+        var choice: String
+        @State var rightAns: Bool
+        @State var cardUp: Bool = false
+        var body: some View {
+            ZStack{
+                let shape  = RoundedRectangle(cornerRadius: 20)
+                    .stroke(lineWidth: 3)
+                    .frame(width: 320, height: 90, alignment: .top)
+                if cardUp {
+                    
+                    
+                    if rightAns{
+                        Text("Right Answer!!")
+                        shape.foregroundColor(.green)
+                        
+                    }else{
+                        shape.foregroundColor(.red)
+                        Text("Bad Answer!!")
+                        
+                    }
                     
                 }else{
-                    shape.foregroundColor(.red)
-                    Text("Bad Answer!!")
                     
+                    shape.foregroundColor(.orange)
+                    Text(choice)
                 }
+            }.onTapGesture {
+                cardUp = !cardUp
                 
-            }else{
-                
-                shape.foregroundColor(.orange)
-                Text(choice)
             }
-        }.onTapGesture {
-            cardUp = !cardUp
+            
+        }
+        
+        struct QuestionsView_Previews: PreviewProvider {
+            static var previews: some View {
+                
+                QuestionsView()
+                    .preferredColorScheme(.dark)
+                
+            }
             
         }
         
     }
-    
-    struct QuestionsView_Previews: PreviewProvider {
-        static var previews: some View {
-            
-            QuestionsView()
-                .preferredColorScheme(.dark)
-            
-            QuestionsView()
-                .preferredColorScheme(.light)
-        }
-        
-    }
-    
 }
-
 

@@ -10,8 +10,8 @@ import SwiftUI
 struct ContentView: View {
     
     @State var username: String = ""
-    @State private var levelIndex = 0
-    var levelOptions = ["Easy", "Medium",  "Hard"]
+    @State private var difficultyIndex = 0
+    var difficultyOptions = ["Easy", "Medium",  "Hard"]
     @State var categoryIndex = 0
     var categoryOptions = ["Any Category",
                            "General Knowledge",
@@ -45,9 +45,9 @@ struct ContentView: View {
                 Form {
                     TextField("Your name", text: $username)
                     
-                    Picker(selection: $levelIndex, label: Text("Difficulty")) {
-                        ForEach(0 ..< levelOptions.count) {
-                            Text(self.levelOptions[$0])
+                    Picker(selection: $difficultyIndex, label: Text("Difficulty")) {
+                        ForEach(0 ..< difficultyOptions.count) {
+                            Text(self.difficultyOptions[$0])
                         }
                         
                     }
@@ -62,8 +62,9 @@ struct ContentView: View {
                 
                 Button(action: {
 //                    getting questions 
-//                    let api = Api(level: levelOptions[levelIndex], category: categoryIndex + 8)
-//                    api.loadQuestions()
+//                    let game = Game(difficulty: difficultyOptions[difficultyIndex], category: categoryIndex)
+//                    print(game.questions)
+//                    _ = game.getQuestion(number: 0)
                 }) {
                     NavigationLink(destination: QuestionsView()) {
                         Text("I'm ready")
