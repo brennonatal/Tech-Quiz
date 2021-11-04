@@ -57,9 +57,9 @@
 		050E7F05272CA04500A8139B /* Tech-Quiz */ = {
 			isa = PBXGroup;
 			children = (
-				6AA67D8B2732CADE00732705 /* StartView.swift */,
 				050E7F06272CA04500A8139B /* Tech_QuizApp.swift */,
 				050E7F08272CA04500A8139B /* ContentView.swift */,
+				6AA67D8B2732CADE00732705 /* StartView.swift */,
 				050E7F0A272CA05600A8139B /* Assets.xcassets */,
 				050E7F0C272CA05600A8139B /* Preview Content */,
 				050E7F14272CEFFC00A8139B /* QuestionsView.swift */,

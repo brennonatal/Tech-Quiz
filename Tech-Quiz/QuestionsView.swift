@@ -21,11 +21,17 @@ struct LevelView: View {
                     Text("Difficulty")
                         .font(.largeTitle)
                         .foregroundColor(.mint)
-                }
+                }.padding()
                 VStack{
                     ZStack{
+                        RoundedRectangle(cornerRadius: 25)
+                            .foregroundColor(.mint)
+                            .frame(width: 380, height: 190, alignment: .top)
+
                         RoundedRectangle(cornerRadius: 20)
                             .fill(.gray)
+                            .frame(width: 370, height: 180, alignment: .top)
+                    
                         Text("Question")
                             .font(.largeTitle)
                             .foregroundColor(.mint)
@@ -97,7 +103,7 @@ struct QuestionsView: View {
             ZStack{
                 let shape  = RoundedRectangle(cornerRadius: 20)
                     .stroke(lineWidth: 3)
-                    .frame(width: 320, height: 90, alignment: .top)
+                    .frame(width: 360, height: 90, alignment: .top)
                 if cardUp {
                     
                     
