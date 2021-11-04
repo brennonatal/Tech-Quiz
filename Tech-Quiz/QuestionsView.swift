@@ -33,7 +33,7 @@ struct LevelView: View {
                             .fill(.gray)
                             .frame(width: 370, height: 180, alignment: .top)
                         
-                        Text(self.title)
+                        Text(self.title.base64Decoded()!)
                             .font(.largeTitle)
                             .foregroundColor(.mint)
                     }
@@ -56,7 +56,7 @@ struct QuestionsView: View {
             Spacer()
             
             List(self.answers) { answer in
-                QuestionCardView(choice: answer.title, rightAns: answer.isCorrect)
+                QuestionCardView(choice: answer.title.base64Decoded()!, rightAns: answer.isCorrect)
             }
             
             Spacer()

@@ -63,9 +63,9 @@ class Game {
     
     func buildQuery() -> String {
         if self.category > 8 {
-            return "\(self.baseUrl)&category=\(category)&difficulty=\(difficulty)"
+            return "\(self.baseUrl)&category=\(category)&difficulty=\(difficulty)&encode=base64"
         }
-        return "\(self.baseUrl)&difficulty=\(self.difficulty)"
+        return "\(self.baseUrl)&difficulty=\(self.difficulty)&encode=base64"
     }
     
     func loadQuestion(completion: @escaping (Question) -> ()) {
@@ -92,5 +92,12 @@ func getAnswers(question: Question, completion: @escaping ([Answer]) -> ()) {
     
     DispatchQueue.main.async {
         completion(answers)
+    }
+}
+
+extension String {
+    func base64Decoded() -> String? {
+        guard let data = Data(base64Encoded: self) else { return nil }
+        return String(data: data, encoding: .utf8)
     }
 }
