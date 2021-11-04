@@ -13,6 +13,7 @@ struct StartView: View {
 
             LevelOptionView()
             TitleView()
+            
                 
             CategoryOptionView().padding()
             Spacer()

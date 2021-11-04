@@ -14,31 +14,30 @@ struct LevelView: View {
         HStack{
             let shape = RoundedRectangle(cornerRadius: 20)
                 .stroke(lineWidth: 3)
-                .frame(width: 800, height: 80, alignment: .top)
+                .frame(width: 120, height: 80, alignment: .center)
+        
+            
             VStack{
                 
                 ZStack{
                     shape
                     Text("Difficulty")
-                        .font(.largeTitle)
                         .foregroundColor(.mint)
                 }.padding()
                 VStack{
-                    ZStack{
-                        RoundedRectangle(cornerRadius: 25)
-                            .foregroundColor(.mint)
-                            .frame(width: 380, height: 190, alignment: .top)
-                        
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(.gray)
-                            .frame(width: 370, height: 180, alignment: .top)
-                        
-                        Text(self.title.base64Decoded()!)
-                            .font(.largeTitle)
-                            .foregroundColor(.mint)
-                    }
+                    Text(self.title)
+                        .font(.title2)
+                        .frame(width: 340, height: 180)
+                        .foregroundColor(.orange)
+                        .padding()
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(Color.mint, lineWidth: 5)
+                        )
                 }
             }
+            
+            
         }
     }
 }
@@ -51,17 +50,19 @@ struct QuestionsView: View {
     var body: some View {
         
         VStack{
-            LevelView(title: self.question.question)
-                .padding(30)
-            Spacer()
             
+            
+            LevelView(title: self.question.question.base64Decoded()!)
             List(self.answers) { answer in
-                QuestionCardView(choice: answer.title.base64Decoded()!, rightAns: answer.isCorrect)
-            }
+                QuestionCardView(choice: answer.title.base64Decoded()!, rightAns: answer.isCorrect).scaledToFill()
+            }.scaledToFill()
+                
+
             
             Spacer()
             
         }
+
         .padding()
         .onAppear {
             Game(difficulty: "easy", category: 1).loadQuestion { (question) in
@@ -83,14 +84,25 @@ struct QuestionsView: View {
         var body: some View {
             ZStack{
                 let shape  = RoundedRectangle(cornerRadius: 20)
-                    .stroke(lineWidth: 3)
-                    .frame(width: 360, height: 90, alignment: .top)
+                    .font(.title2)
+                    .frame(width: 265, height: 40)
+                    .scaleEffect(CGSize(width: 1.05, height: 1.1))
+//                    .foregroundColor(.orange)
+                    .padding()
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color.mint, lineWidth: 5)
+                    )
+                
                 if cardUp {
                     
                     
                     if rightAns{
-                        Text("Right Answer!!")
                         shape.foregroundColor(.green)
+                        Text("Right Answer!!")
+                        
+
+                            
                         
                     }else{
                         shape.foregroundColor(.red)
@@ -100,10 +112,20 @@ struct QuestionsView: View {
                     
                 }else{
                     
-                    shape.foregroundColor(.orange)
+                    
+                    
                     Text(choice)
+                        .font(.title2)
+                        .frame(width: 265, height: 40, alignment: .center)
+                        .foregroundColor(.orange)
+                        .padding()
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(Color.mint, lineWidth: 5)
+                        )
                 }
-            }.onTapGesture {
+            }.scaleEffect(CGSize(width: 1.12, height: 1.05))
+            .onTapGesture {
                 cardUp = !cardUp
                 
             }
