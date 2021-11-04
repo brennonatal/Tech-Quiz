@@ -9,6 +9,7 @@ import SwiftUI
 
 
 struct LevelView: View {
+    var title : String
     var body: some View {
         HStack{
             let shape = RoundedRectangle(cornerRadius: 20)
@@ -27,53 +28,35 @@ struct LevelView: View {
                         RoundedRectangle(cornerRadius: 25)
                             .foregroundColor(.mint)
                             .frame(width: 380, height: 190, alignment: .top)
-
+                        
                         RoundedRectangle(cornerRadius: 20)
                             .fill(.gray)
                             .frame(width: 370, height: 180, alignment: .top)
-                    
-                        Text("Question")
+                        
+                        Text(self.title)
                             .font(.largeTitle)
                             .foregroundColor(.mint)
-                        
-                        
                     }
                 }
-                
-                
             }
-            
         }
     }
-    
 }
 
 
 struct QuestionsView: View {
-    @State var isBool = false
-    @State var choices = ["A","B","C","D"]
-    @State var questions : [Question] = []
+    @State var question : Question = Question()
     @State var answers : [Answer] = []
-    @State var boolChoices = ["True","False"]
+    
     var body: some View {
         
         VStack{
-            LevelView()
+            LevelView(title: self.question.question)
                 .padding(30)
             Spacer()
-            if isBool{
-                QuestionCardView(choice: "True", rightAns:true)
-                QuestionCardView(choice: "False", rightAns:false)
-                
-            } else{
-//                UNDER DEVELOPMENT
-//                List(answers) { answer in
-//                    QuestionCardView(choice: answer.title, rightAns: answer.isCorrect)
-//                }
-                QuestionCardView(choice: "A", rightAns:true)
-                QuestionCardView(choice: "B", rightAns:false)
-                QuestionCardView(choice: "C", rightAns:false)
-                QuestionCardView(choice: "D", rightAns:false)
+            
+            List(self.answers) { answer in
+                QuestionCardView(choice: answer.title, rightAns: answer.isCorrect)
             }
             
             Spacer()
@@ -81,14 +64,12 @@ struct QuestionsView: View {
         }
         .padding()
         .onAppear {
-            Game(difficulty: "easy", category: 1).loadQuestions { (question) in
-                self.questions = questions
-                
+            Game(difficulty: "easy", category: 1).loadQuestion { (question) in
+                self.question = question
+                getAnswers(question: question) { answers in
+                    self.answers = answers
+                }
             }
-//            UNDER DEVELOPMENT
-//            getAnswers(question: self.questions[0]) { answers in
-//                self.answers = answers
-//            }
             
         }
         
@@ -130,14 +111,14 @@ struct QuestionsView: View {
         }
         
     }
-struct QuestionsView_Previews: PreviewProvider {
-    static var previews: some View {
-                
-        QuestionsView()
-            .preferredColorScheme(.dark)
-                
-        }
-                
-    }
+    struct QuestionsView_Previews: PreviewProvider {
+        static var previews: some View {
             
+            QuestionsView()
+                .preferredColorScheme(.dark)
+            
+        }
+        
+    }
+    
 }

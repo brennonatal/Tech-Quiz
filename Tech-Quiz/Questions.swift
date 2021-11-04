@@ -14,18 +14,26 @@ struct QuestionsResult: Codable {
 }
 
 
-struct Question: Codable{
-//  var id : Int = 0
+struct Question: Codable {
     let category : String
     let type : String
     let difficulty: String
     let question : String
     let correct_answer: String
     let incorrect_answers : [String]
+    
+    init() {
+        self.category = ""
+        self.type = ""
+        self.difficulty = ""
+        self.question = ""
+        self.correct_answer = ""
+        self.incorrect_answers = []
+    }
 }
 
 struct Answer: Codable, Identifiable {
-    var id : Int = 0
+    var id = UUID()
     let title : String
     let isCorrect: Bool
     
@@ -60,14 +68,14 @@ class Game {
         return "\(self.baseUrl)&difficulty=\(self.difficulty)"
     }
     
-    func loadQuestions(completion: @escaping ([Question]) -> ()) {
+    func loadQuestion(completion: @escaping (Question) -> ()) {
         guard let url = URL(string: self.buildQuery()) else { return }
         
         URLSession.shared.dataTask(with: url) { (data, _, _) in
-            let result = try! JSONDecoder().decode(QuestionsResult.self, from: data!)
+            let response = try! JSONDecoder().decode(QuestionsResult.self, from: data!)
             
             DispatchQueue.main.async {
-                completion(result.results)
+                completion(response.results[0])
             }
         }
         .resume()

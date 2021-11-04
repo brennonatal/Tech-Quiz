@@ -52,7 +52,6 @@ struct ContentView: View {
                         
                     }
                     
-                    
                     Picker(selection: $categoryIndex, label: Text("Category")) {
                         ForEach(0 ..< categoryOptions.count) {
                             Text(self.categoryOptions[$0])
