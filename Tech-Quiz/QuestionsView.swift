@@ -10,6 +10,9 @@ import SwiftUI
 
 struct LevelView: View {
     var title : String
+    var index = LevelOptionView().difficultyIndex
+    var options = LevelOptionView().difficultyOptions
+    
     var body: some View {
         HStack{
             let shape = RoundedRectangle(cornerRadius: 20)
@@ -21,7 +24,8 @@ struct LevelView: View {
                 
                 ZStack{
                     shape
-                    Text("Difficulty")
+                    Text(options[index])
+                  
                         .foregroundColor(.mint)
                 }.padding()
                 VStack{
@@ -43,9 +47,12 @@ struct LevelView: View {
 }
 
 
+
 struct QuestionsView: View {
     @State var question : Question = Question()
     @State var answers : [Answer] = []
+    @State var index = LevelOptionView().difficultyIndex
+    @State var options = LevelOptionView().difficultyOptions
     
     var body: some View {
         
@@ -65,7 +72,7 @@ struct QuestionsView: View {
 
         .padding()
         .onAppear {
-            Game(difficulty: "easy", category: 1).loadQuestion { (question) in
+            Game(difficulty: options[index], category: 1).loadQuestion { (question) in
                 self.question = question
                 getAnswers(question: question) { answers in
                     self.answers = answers
