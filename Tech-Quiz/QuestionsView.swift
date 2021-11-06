@@ -14,35 +14,23 @@ struct LevelView: View {
     var options = StartView().difficultyOptions
     
     var body: some View {
-        HStack{
-            let shape = RoundedRectangle(cornerRadius: 20)
-                .stroke(lineWidth: 3)
-                .frame(width: 120, height: 80, alignment: .center)
+        VStack{
+            Text(options[index])
+                .foregroundColor(.mint)
+                .modifier(CustomFrame(width: 80, height: 50, align: .center, strokeColor: .white))
             
-            VStack {
-                ZStack {
-                    shape
-                    Text(options[index])
-                        .foregroundColor(.mint)
-                }.padding()
-                VStack{
-                    Text(self.title)
-                        .font(.title2)
-                        .frame(width: 340, height: 180)
-                        .foregroundColor(.orange)
-                        .padding()
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(Color.mint, lineWidth: 5)
-                        )
-                }
-            }
+            Text(self.title)
+                .font(.title2)
+                .modifier(CustomFrame(height: 180, strokeColor: .mint))
+                .foregroundColor(.orange)
         }
     }
 }
 
 
 struct QuestionsView: View {
+    @EnvironmentObject var game: Game
+    
     @State var question : Question = Question()
     @State var answers : [Answer] = []
     @State var index = StartView().difficultyIndex
@@ -52,24 +40,28 @@ struct QuestionsView: View {
         NavigationView {
             VStack {
                 LevelView(title: self.question.question.base64Decoded()!)
-                List(self.answers) { answer in
-                    QuestionCardView(choice: answer.title.base64Decoded()!, rightAns: answer.isCorrect).scaledToFill()
-                }.scaledToFill()
+//                List(self.answers) { answer in
+//                    QuestionCardView(choice: answer.title.base64Decoded()!, rightAns: answer.isCorrect).scaledToFill()
+//                }.scaledToFill()
+                QuestionCardView(choice: "1", rightAns: true)
+                QuestionCardView(choice: "1", rightAns: false)
+                QuestionCardView(choice: "1", rightAns: false)
+                QuestionCardView(choice: "1", rightAns: false)
+                
                 
                 Spacer()
                 
             }
             .padding()
-            .onAppear {
-                Game(difficulty: options[index], category: 1).loadQuestion { (question) in
-                    self.question = question
-                    getAnswers(question: question) { answers in
-                        self.answers = answers
-                    }
-                }
-            }
+//            .onAppear {
+//                Game(difficulty: options[index], category: 1).loadQuestion { (question) in
+//                    self.question = question
+//                    getAnswers(question: question) { answers in
+//                        self.answers = answers
+//                    }
+//                }
+//            }
             .navigationBarHidden(true)
-            
         }
     }
 }
@@ -80,43 +72,27 @@ struct QuestionCardView: View {
     @State var rightAns: Bool
     @State var cardUp: Bool = false
     var body: some View {
-        ZStack{
-            let shape  = RoundedRectangle(cornerRadius: 20)
-                .font(.title2)
-                .frame(width: 265, height: 40)
-                .scaleEffect(CGSize(width: 1.05, height: 1.1))
-            //                    .foregroundColor(.orange)
-                .padding()
-                .overlay(
-                    RoundedRectangle(cornerRadius: 20)
-                        .stroke(Color.mint, lineWidth: 5)
-                )
-            
+        VStack{
             if cardUp {
                 if rightAns{
-                    shape.foregroundColor(.green)
-                        Text("Right Answer!!")
+                    Text("Right Answer!!")
+                        .modifier(CustomFrame(height: 50, strokeColor: .green))
                 } else {
-                    shape.foregroundColor(.red)
                     Text("Bad Answer!!")
+                        .modifier(CustomFrame(height: 50, strokeColor: .red))
                 }
                 
             } else {
                 Text(choice)
                     .font(.title2)
-                    .frame(width: 265, height: 40, alignment: .center)
                     .foregroundColor(.orange)
-                    .padding()
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(Color.mint, lineWidth: 5)
-                    )
+                    .modifier(CustomFrame(height: 50, strokeColor: .orange))
             }
-        }.scaleEffect(CGSize(width: 1.12, height: 1.05))
-            .onTapGesture {
-                cardUp = !cardUp
-                
-            }
+        }
+        .onTapGesture {
+            cardUp = !cardUp
+            
+        }
     }
     
 }
