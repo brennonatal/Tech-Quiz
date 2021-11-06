@@ -10,15 +10,9 @@ import SwiftUI
 
 struct LevelView: View {
     var title : String
-    var index = StartView().difficultyIndex
-    var options = StartView().difficultyOptions
     
     var body: some View {
         VStack{
-            Text(options[index])
-                .foregroundColor(.mint)
-                .modifier(CustomFrame(width: 80, height: 50, align: .center, strokeColor: .white))
-            
             Text(self.title)
                 .font(.title2)
                 .modifier(CustomFrame(height: 180, strokeColor: .mint))
@@ -30,43 +24,37 @@ struct LevelView: View {
 
 struct QuestionsView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @EnvironmentObject var game: Game
+    @State var game: Game
     
     @State var question : Question = Question()
+    @State var questionIndex: Int
     @State var answers : [Answer] = []
     @State var index = StartView().difficultyIndex
     @State var options = StartView().difficultyOptions
     
     var body: some View {
             VStack {
-                LevelView(title: self.question.question.base64Decoded()!)
-//                List(self.answers) { answer in
-//                    QuestionCardView(choice: answer.title.base64Decoded()!, rightAns: answer.isCorrect).scaledToFill()
-//                }.scaledToFill()
-                QuestionCardView(choice: "1", rightAns: true)
-                QuestionCardView(choice: "1", rightAns: false)
-                QuestionCardView(choice: "1", rightAns: false)
-                QuestionCardView(choice: "1", rightAns: false)
+                LevelView(title: question.question.base64Decoded()!)
+                Spacer()
+                ForEach(self.answers) { answer in
+                    QuestionCardView(choice: answer.title.base64Decoded()!, rightAns: answer.isCorrect)
+                }
                 Spacer()
                 Button(action: {
                     self.presentationMode.wrappedValue.dismiss()
                 }) {
-                    NavigationLink(destination: QuestionsView()) {
+                    NavigationLink(destination: QuestionsView(game: self.game, questionIndex: self.questionIndex + 1)) {
                         Text("Next question")
                             .modifier(CustomFrame(height: 50, strokeColor: .green))
                     }
                 }
             }
             .padding()
-        
-        //            .onAppear {
-        //                Game(difficulty: options[index], category: 1).loadQuestion { (question) in
-        //                    self.question = question
-//                    getAnswers(question: question) { answers in
-//                        self.answers = answers
-//                    }
-//                }
-//            }
+            .onAppear {
+                self.question = loadQuestion(questions: self.game.questions,
+                                             questionIndex: self.questionIndex)
+                self.answers = getAnswers(question: self.question)
+            }
             .navigationBarHidden(true)
             .navigationBarBackButtonHidden(true)
         
@@ -108,8 +96,7 @@ struct QuestionCardView: View {
 
 struct QuestionsView_Previews: PreviewProvider {
     static var previews: some View {
-        
-        QuestionsView()
+        QuestionsView(game: Game(difficulty: "easy", category: 0), questionIndex: 0)
             .preferredColorScheme(.dark)
         
     }

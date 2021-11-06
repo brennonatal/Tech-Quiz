@@ -43,15 +43,18 @@ struct Answer: Codable, Identifiable {
     }
 }
 
-func getAnswers(question: Question, completion: @escaping ([Answer]) -> ()) {
+func getAnswers(question: Question) -> [Answer] {
     var answers : [Answer] = []
     answers.append(Answer(title: question.correct_answer, isCorrect: true))
     for answer in question.incorrect_answers {
         answers.append(Answer(title: answer, isCorrect: false))
     }
-    answers = answers.shuffled()
+    return answers.shuffled()
+}
+
+func loadQuestion(questions: [Question], questionIndex: Int) -> Question {
     
-    DispatchQueue.main.async {
-        completion(answers)
-    }
+    let question: Question = questions[questionIndex]
+    
+    return question
 }

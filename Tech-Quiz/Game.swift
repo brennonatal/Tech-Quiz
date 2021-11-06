@@ -15,7 +15,7 @@ class Game: ObservableObject {
     @Published var username: String = "player42"
     @Published var score: Int = 0
     @Published var questions : [Question] = []
-    var questionNumber : Int = 0
+//    @Published var questionNumber : Int = 0
     
     init(difficulty: String, category: Int) {
         self.difficulty = difficulty.lowercased()

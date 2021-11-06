@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct StartView: View {
+    @ObservedObject var game = Game(difficulty: "easy", category: 0)
+    
     @State var username: String = ""
     @State var difficultyIndex = 0
     var difficultyOptions = ["Easy", "Medium",  "Hard"]
@@ -62,9 +64,12 @@ struct StartView: View {
                 
                 
                 Spacer()
-                ReadyStartView(username: username)
+                ReadyStartView(username: username,
+                               difficulty: self.difficultyOptions[self.difficultyIndex],
+                               category: self.categoryIndex)
             }
             .navigationBarHidden(true)
+            .environmentObject(game)
         }
     }
 }
@@ -87,15 +92,24 @@ struct TitleView: View {
 
 
 struct ReadyStartView: View {
+    @EnvironmentObject var game: Game
     var username: String
+    var difficulty: String
+    var category: Int
+    
     var body: some View {
         VStack {
             if username != "" {
-                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
-                    NavigationLink(destination: QuestionsView()) {
+                Button(action: {
+                    self.game.startGame(username: self.username,
+                                        difficulty: self.difficulty,
+                                        category: Int(self.category))
+                }) {
+                    NavigationLink(destination: QuestionsView(game: self.game, questionIndex: 0)) {
                         Text("I'm ready")
                             .foregroundColor(.black)
                             .font(.largeTitle)
+                            .navigationBarHidden(true)
                     }
                 }
                 .modifier(CustomFrame(height: 60, strokeColor: .green, background: .green))
