@@ -29,6 +29,7 @@ struct LevelView: View {
 
 
 struct QuestionsView: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var game: Game
     
     @State var question : Question = Question()
@@ -37,7 +38,6 @@ struct QuestionsView: View {
     @State var options = StartView().difficultyOptions
     
     var body: some View {
-        NavigationView {
             VStack {
                 LevelView(title: self.question.question.base64Decoded()!)
 //                List(self.answers) { answer in
@@ -47,22 +47,29 @@ struct QuestionsView: View {
                 QuestionCardView(choice: "1", rightAns: false)
                 QuestionCardView(choice: "1", rightAns: false)
                 QuestionCardView(choice: "1", rightAns: false)
-                
-                
                 Spacer()
-                
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }) {
+                    NavigationLink(destination: QuestionsView()) {
+                        Text("Next question")
+                            .modifier(CustomFrame(height: 50, strokeColor: .green))
+                    }
+                }
             }
             .padding()
-//            .onAppear {
-//                Game(difficulty: options[index], category: 1).loadQuestion { (question) in
-//                    self.question = question
+        
+        //            .onAppear {
+        //                Game(difficulty: options[index], category: 1).loadQuestion { (question) in
+        //                    self.question = question
 //                    getAnswers(question: question) { answers in
 //                        self.answers = answers
 //                    }
 //                }
 //            }
             .navigationBarHidden(true)
-        }
+            .navigationBarBackButtonHidden(true)
+        
     }
 }
 
@@ -77,6 +84,7 @@ struct QuestionCardView: View {
                 if rightAns{
                     Text("Right Answer!!")
                         .modifier(CustomFrame(height: 50, strokeColor: .green))
+                    
                 } else {
                     Text("Bad Answer!!")
                         .modifier(CustomFrame(height: 50, strokeColor: .red))
