@@ -24,20 +24,20 @@ extension UIScreen{
 
 
 struct CustomFrame: ViewModifier {
-    var width: CGFloat?
+    var width: CGFloat = UIScreen.screenWidth
     var height: CGFloat?
-    var align: Alignment
+    var align: Alignment = .center
     var strokeColor: Color
-    var lineWidth: CGFloat
-    var background: Color?
+    var lineWidth: CGFloat = 3
+    var background: Color = .clear
     
     func body(content: Content) -> some View {
         content
-            .frame(width: self.width ?? UIScreen.screenWidth, height: self.height, alignment: self.align)
+            .frame(width: self.width, height: self.height, alignment: self.align)
             .padding()
             .overlay(
                 RoundedRectangle(cornerRadius: 20)
                     .stroke(self.strokeColor, lineWidth: self.lineWidth)
-            ).background(RoundedRectangle(cornerRadius: 20).fill(self.background ?? Color.clear))
+            ).background(RoundedRectangle(cornerRadius: 20).fill(self.background))
     }
 }
