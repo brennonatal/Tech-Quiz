@@ -94,10 +94,3 @@ func getAnswers(question: Question, completion: @escaping ([Answer]) -> ()) {
         completion(answers)
     }
 }
-
-extension String {
-    func base64Decoded() -> String? {
-        guard let data = Data(base64Encoded: self) else { return nil }
-        return String(data: data, encoding: .utf8)
-    }
-}

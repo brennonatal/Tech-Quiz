@@ -9,9 +9,9 @@ import SwiftUI
 
 struct StartView: View {
     @State var username: String = ""
-    @State var tapped: Bool = false
     @State var difficultyIndex = 0
     var difficultyOptions = ["Easy", "Medium",  "Hard"]
+    var difficultyColor: [Color] = [.green, .orange, .red]
     @State var colors: Color = .mint
     @State var categoryIndex = 0
     var categoryOptions = ["Any Category", "General Knowledge",
@@ -31,65 +31,35 @@ struct StartView: View {
     var body: some View {
         NavigationView {
             VStack {
-                ZStack {
-                    // make this shape global?
-                    let shape  = RoundedRectangle(cornerRadius: 20)
-                        .stroke(lineWidth: 3)
-                        .frame(width: 360, height: 75, alignment: .top)
-                    if difficultyIndex == 0{
-                        shape.foregroundColor(.green)
-                        
-                    } else if difficultyIndex == 1 {
-                        shape.foregroundColor(.orange)
-                    } else {
-                        shape.foregroundColor(.red)
+                Picker(selection: $difficultyIndex, label: Text("Difficulty")){
+                    ForEach(0 ..< difficultyOptions.count)
+                    {
+                        Text(self.difficultyOptions[$0])
                     }
-                    
-                    Picker(selection: $difficultyIndex, label: Text("Difficulty")){
-                        ForEach(0 ..< difficultyOptions.count)
-                        {
-                            Text(self.difficultyOptions[$0])
-                        }
-                    }
-                    .frame(width: 340, height: 100, alignment: .center)
-                    .pickerStyle(SegmentedPickerStyle())
-                    .scaledToFit()
-                    .scaleEffect(CGSize(width: 1.0, height: 1.34))
                 }
+                .pickerStyle(SegmentedPickerStyle())
+                .scaledToFill()
+                .scaleEffect(CGSize(width: 1.0, height: 1.34))
+                .modifier(CustomFrame(height: 32, align: .center, strokeColor: self.difficultyColor[difficultyIndex], lineWidth: 3))
+                .padding()
                 
                 TitleView()
                 Spacer()
-                ZStack {
-                    let shape  = RoundedRectangle(cornerRadius: 20)
-                        .stroke(lineWidth: 3)
-                        .frame(width: 360, height: 50, alignment: .center)
-                        .foregroundColor(.mint)
-                    shape
-                    
-                    TextField("Your name", text: $username)
-                        .frame(width: 240, height: 30, alignment: .center)
-                        .scaledToFit()
-                        .scaleEffect(CGSize(width: 1.4, height: 1.5))
-                        .multilineTextAlignment(TextAlignment.center)
-                }
-                .padding()
                 
-                ZStack{
-                    let shape  = RoundedRectangle(cornerRadius: 20)
-                        .stroke(lineWidth: 3)
-                        .frame(width: 360, height: 50, alignment: .center)
-                        .foregroundColor(.mint)
-                    shape
-                    
-                    Picker(selection: $categoryIndex, label: Text("Category")) {
-                        ForEach(0 ..< categoryOptions.count) {
-                            Text(self.categoryOptions[$0])
-                        }
-                    }.frame(width: 240, height: 30, alignment: .center)
-                        .scaledToFit()
-                        .scaleEffect(CGSize(width: 1.4, height: 1.5))
+                TextField("Your name", text: $username)
+                    .font(.title)
+                    .modifier(CustomFrame(height: 30, align: .center, strokeColor: .mint, lineWidth: 3))
+                    .multilineTextAlignment(TextAlignment.center)
+                
+                
+                Picker(selection: $categoryIndex, label: Text("Category")) {
+                    ForEach(0 ..< categoryOptions.count) {
+                        Text(self.categoryOptions[$0])
+                    }
                 }
-                .padding()
+                .scaleEffect(CGSize(width: 1.4, height: 1.7))
+                .modifier(CustomFrame(height: 30, align: .center, strokeColor: .mint, lineWidth: 3))
+                
                 
                 Spacer()
                 ReadyStartView(username: username)
@@ -100,27 +70,18 @@ struct StartView: View {
 }
 
 
-struct TitleView: View{
-    var body:some View{
-        VStack{
-            let shape  = RoundedRectangle(cornerRadius: 20)
-                .stroke(lineWidth: 3)
-                .frame(width: 360, height: 360, alignment: .top)
-                .foregroundColor(.mint)
-            ZStack{
-                shape
-                VStack() {
-                    Text("?")
-                        .foregroundColor(.orange)
-                        .padding()
-                        .font(Font.custom("Montserrat-Bold", size: 180))
-                    Text("Tech Quiz")
-                        .foregroundColor(.orange)
-                        .padding()
-                        .font(.largeTitle)
-                }
-            }
+struct TitleView: View {
+    var body:some View {
+        VStack {
+            Text("?")
+                .foregroundColor(.orange)
+                .font(Font.custom("Montserrat-Bold", size: 180))
+            Text("Tech Quiz")
+                .foregroundColor(.orange)
+                .font(Font.custom("Montserrat-Bold", size: 60))
+                .bold()
         }
+        .modifier(CustomFrame(height: 300, align: .center, strokeColor: .mint, lineWidth: 3))
     }
 }
 
@@ -128,28 +89,23 @@ struct TitleView: View{
 struct ReadyStartView: View {
     var username: String
     var body: some View {
-        ZStack {
-            let shape  = RoundedRectangle(cornerRadius: 20)
-                .stroke(lineWidth: 5)
-                .frame(width: 360, height: 90, alignment: .top)
+        VStack {
             if username != "" {
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
                     NavigationLink(destination: QuestionsView()) {
                         Text("I'm ready")
-                            .foregroundColor(.green)
+                            .foregroundColor(.black)
                             .font(.largeTitle)
-                            .bold()
                     }
                 }
-                shape.foregroundColor(.green)
+                .modifier(CustomFrame(height: 60, align: .center, strokeColor: .green, lineWidth: 3, background: .green))
                 
             } else {
-                shape
-                    .foregroundColor(.yellow)
                 Text("Loading...")
                     .font(.title)
                     .bold()
                     .foregroundColor(.gray)
+                    .modifier(CustomFrame(height: 60, align: .center, strokeColor: .yellow, lineWidth: 3, background: .yellow))
             }
         }
     }

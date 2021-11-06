@@ -23,7 +23,6 @@ struct LevelView: View {
                 ZStack {
                     shape
                     Text(options[index])
-                    
                         .foregroundColor(.mint)
                 }.padding()
                 VStack{
@@ -69,7 +68,7 @@ struct QuestionsView: View {
                     }
                 }
             }
-            
+            .navigationBarHidden(true)
             
         }
     }
@@ -96,9 +95,7 @@ struct QuestionCardView: View {
             if cardUp {
                 if rightAns{
                     shape.foregroundColor(.green)
-                    NavigationLink(destination: QuestionsView()) {
                         Text("Right Answer!!")
-                    }
                 } else {
                     shape.foregroundColor(.red)
                     Text("Bad Answer!!")
