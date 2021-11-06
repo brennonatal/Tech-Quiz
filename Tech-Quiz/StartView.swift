@@ -40,7 +40,7 @@ struct StartView: View {
                 .pickerStyle(SegmentedPickerStyle())
                 .scaledToFill()
                 .scaleEffect(CGSize(width: 1.0, height: 1.34))
-                .modifier(CustomFrame(height: 32, align: .center, strokeColor: self.difficultyColor[difficultyIndex], lineWidth: 3))
+                .modifier(CustomFrame(height: 32, strokeColor: self.difficultyColor[difficultyIndex]))
                 .padding()
                 
                 TitleView()
@@ -48,7 +48,7 @@ struct StartView: View {
                 
                 TextField("Your name", text: $username)
                     .font(.title)
-                    .modifier(CustomFrame(height: 30, align: .center, strokeColor: .mint, lineWidth: 3))
+                    .modifier(CustomFrame(height: 30, strokeColor: .mint))
                     .multilineTextAlignment(TextAlignment.center)
                 
                 
@@ -58,7 +58,7 @@ struct StartView: View {
                     }
                 }
                 .scaleEffect(CGSize(width: 1.4, height: 1.7))
-                .modifier(CustomFrame(height: 30, align: .center, strokeColor: .mint, lineWidth: 3))
+                .modifier(CustomFrame(height: 30, strokeColor: .mint))
                 
                 
                 Spacer()
@@ -81,7 +81,7 @@ struct TitleView: View {
                 .font(Font.custom("Montserrat-Bold", size: 60))
                 .bold()
         }
-        .modifier(CustomFrame(height: 300, align: .center, strokeColor: .mint, lineWidth: 3))
+        .modifier(CustomFrame(height: 300, strokeColor: .mint))
     }
 }
 
@@ -98,14 +98,14 @@ struct ReadyStartView: View {
                             .font(.largeTitle)
                     }
                 }
-                .modifier(CustomFrame(height: 60, align: .center, strokeColor: .green, lineWidth: 3, background: .green))
+                .modifier(CustomFrame(height: 60, strokeColor: .green, background: .green))
                 
             } else {
                 Text("Loading...")
                     .font(.title)
                     .bold()
                     .foregroundColor(.gray)
-                    .modifier(CustomFrame(height: 60, align: .center, strokeColor: .yellow, lineWidth: 3, background: .yellow))
+                    .modifier(CustomFrame(height: 60, strokeColor: .yellow, background: .yellow))
             }
         }
     }
