@@ -54,8 +54,6 @@ struct QuestionsView: View {
             }
             .padding()
             .onAppear {
-                self.question = loadQuestion(questions: self.game.questions,
-                                             questionIndex: self.questionIndex)
                 self.answers = getAnswers(question: self.question)
             }
             .navigationBarHidden(true)
