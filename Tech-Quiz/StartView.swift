@@ -96,24 +96,25 @@ struct ReadyStartView: View {
     var username: String
     var difficulty: String
     var category: Int
+    @State private var shouldTransit: Bool = false
     
     var body: some View {
         VStack {
             if username != "" {
-                Button(action: {
-                    self.game.startGame(username: self.username,
-                                        difficulty: self.difficulty,
-                                        category: Int(self.category))
-                }) {
-                    NavigationLink(destination: QuestionsView(game: self.game, questionIndex: 0)) {
-                        Text("I'm ready")
-                            .bold()
-                            .foregroundColor(.black)
-                            .font(.largeTitle)
-                            .navigationBarHidden(true)
-                    }
+                NavigationLink(destination: QuestionsView(questionIndex: 0),
+                               isActive: $shouldTransit) {
+                    Text("I'm ready")
+                        .bold()
+                        .foregroundColor(.black)
+                        .font(.largeTitle)
+                        .onTapGesture {
+                            self.game.startGame(username: self.username,
+                                                difficulty: self.difficulty,
+                                                category: Int(self.category))
+                            self.shouldTransit = true
+                        }
+                    
                 }
-//                .modifier(CustomFrame(height: 60, strokeColor: .green, background: .green))
                 .modifier(CustomAnimation(height: 60, background: .green, strokeColor: .green))
             } else {
                 Text("Loading...")
