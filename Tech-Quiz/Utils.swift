@@ -44,16 +44,20 @@ struct CustomFrame: ViewModifier {
 
 struct CustomAnimation: ViewModifier {
     @State private var animationAmount = 1.0
+    var height: CGFloat?
+    var background: Color = .clear
+    var strokeColor: Color
     
     func body(content: Content) -> some View {
         content
-            .frame(width: UIScreen.screenWidth, height: 60, alignment: .center)
+            .frame(width: UIScreen.screenWidth, height: self.height, alignment: .center)
             .padding()
-            .background(.green)
+            .background(self.background)
+            .opacity(0.9)
             .clipShape(RoundedRectangle(cornerRadius: 20))
             .overlay(
                 RoundedRectangle(cornerRadius: 20)
-                    .stroke(.green)
+                    .stroke(self.strokeColor)
                     .scaleEffect(animationAmount)
                     .opacity(2 - animationAmount)
                     .animation(

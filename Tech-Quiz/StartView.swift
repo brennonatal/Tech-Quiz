@@ -42,7 +42,7 @@ struct StartView: View {
                 .pickerStyle(SegmentedPickerStyle())
                 .scaledToFill()
                 .scaleEffect(CGSize(width: 1.0, height: 1.34))
-                .modifier(CustomFrame(height: 32, strokeColor: self.difficultyColor[difficultyIndex]))
+                .modifier(CustomAnimation(height: 30, background: self.difficultyColor[difficultyIndex], strokeColor: self.difficultyColor[difficultyIndex]))
                 .padding()
                 
                 TitleView()
@@ -114,7 +114,7 @@ struct ReadyStartView: View {
                     }
                 }
 //                .modifier(CustomFrame(height: 60, strokeColor: .green, background: .green))
-                .modifier(CustomAnimation())
+                .modifier(CustomAnimation(height: 60, background: .green, strokeColor: .green))
             } else {
                 Text("Loading...")
                     .font(.title)
