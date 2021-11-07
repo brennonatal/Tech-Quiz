@@ -41,3 +41,32 @@ struct CustomFrame: ViewModifier {
             ).background(RoundedRectangle(cornerRadius: 20).fill(self.background))
     }
 }
+
+struct CustomAnimation: ViewModifier {
+    @State private var animationAmount = 1.0
+    
+    func body(content: Content) -> some View {
+        content
+            .frame(width: UIScreen.screenWidth, height: 60, alignment: .center)
+            .padding()
+            .background(.green)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .overlay(
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(.green)
+                    .scaleEffect(animationAmount)
+                    .opacity(2 - animationAmount)
+                    .animation(
+                        .easeInOut(duration: 1)
+                            .repeatForever(autoreverses: false),
+                        value: animationAmount
+                    )
+            )
+            .onAppear {
+                animationAmount = 2
+            }
+        
+    }
+}
+
+

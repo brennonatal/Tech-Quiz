@@ -107,13 +107,14 @@ struct ReadyStartView: View {
                 }) {
                     NavigationLink(destination: QuestionsView(game: self.game, questionIndex: 0)) {
                         Text("I'm ready")
+                            .bold()
                             .foregroundColor(.black)
                             .font(.largeTitle)
                             .navigationBarHidden(true)
                     }
                 }
-                .modifier(CustomFrame(height: 60, strokeColor: .green, background: .green))
-                
+//                .modifier(CustomFrame(height: 60, strokeColor: .green, background: .green))
+                .modifier(CustomAnimation())
             } else {
                 Text("Loading...")
                     .font(.title)
