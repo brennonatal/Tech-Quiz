@@ -24,13 +24,11 @@ struct LevelView: View {
 
 struct QuestionsView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @State var game: Game
+    @EnvironmentObject var game: Game
     
     @State var question : Question = Question()
     @State var questionIndex: Int
     @State var answers : [Answer] = []
-    @State var index = StartView().difficultyIndex
-    @State var options = StartView().difficultyOptions
     
     @State var tappedAnswer: Bool = false
     
@@ -39,14 +37,13 @@ struct QuestionsView: View {
                 LevelView(title: question.question.base64Decoded()!)
                 Spacer()
                 
-                ForEach(Array(zip(self.answers.indices, self.answers)), id: \.0) { index, answer in
-//                    QuestionCardView(choice: answer.title.base64Decoded()!, rightAns: answer.isCorrect)
+                ForEach(self.answers) { answer in
                     Button(action: {
 //                        checkAnswer(answer)
 //                        DispatchQueue.main.asyncAfter(deadline: .now()+2) {}
                         self.presentationMode.wrappedValue.dismiss()
                     }) {
-                        NavigationLink(destination: QuestionsView(game: self.game, questionIndex: self.questionIndex + 1)) {
+                        NavigationLink(destination: QuestionsView(questionIndex: self.questionIndex + 1)) {
                             Text(answer.title.base64Decoded()!)
                                 .foregroundColor(.black)
                                 .modifier(CustomFrame(height: 50, strokeColor: .orange))
@@ -63,7 +60,6 @@ struct QuestionsView: View {
             }
             .navigationBarHidden(true)
             .navigationBarBackButtonHidden(true)
-        
     }
 }
 
@@ -93,18 +89,14 @@ struct QuestionCardView: View {
         }
         .onTapGesture {
             cardUp = !cardUp
-
         }
     }
-    
 }
 
 
 struct QuestionsView_Previews: PreviewProvider {
     static var previews: some View {
-        QuestionsView(game: Game(difficulty: "easy", category: 0), questionIndex: 0)
-            .preferredColorScheme(.dark)
-        
+        QuestionsView(questionIndex: 0)
     }
     
 }

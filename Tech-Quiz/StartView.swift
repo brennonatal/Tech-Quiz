@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StartView: View {
-    @ObservedObject var game = Game(difficulty: "easy", category: 0)
+    @StateObject var game = Game(difficulty: "easy", category: 0)
     
     @State var username: String = ""
     @State var difficultyIndex = 0
@@ -69,8 +69,8 @@ struct StartView: View {
                                category: self.categoryIndex)
             }
             .navigationBarHidden(true)
-            .environmentObject(game)
         }
+        .environmentObject(game)
     }
 }
 
