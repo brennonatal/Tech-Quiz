@@ -32,22 +32,28 @@ struct QuestionsView: View {
     @State var index = StartView().difficultyIndex
     @State var options = StartView().difficultyOptions
     
+    @State var tappedAnswer: Bool = false
+    
     var body: some View {
             VStack {
                 LevelView(title: question.question.base64Decoded()!)
                 Spacer()
-                ForEach(self.answers) { answer in
-                    QuestionCardView(choice: answer.title.base64Decoded()!, rightAns: answer.isCorrect)
-                }
-                Spacer()
-                Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
-                }) {
-                    NavigationLink(destination: QuestionsView(game: self.game, questionIndex: self.questionIndex + 1)) {
-                        Text("Next question")
-                            .modifier(CustomFrame(height: 50, strokeColor: .green))
+                
+                ForEach(Array(zip(self.answers.indices, self.answers)), id: \.0) { index, answer in
+//                    QuestionCardView(choice: answer.title.base64Decoded()!, rightAns: answer.isCorrect)
+                    Button(action: {
+//                        checkAnswer(answer)
+//                        DispatchQueue.main.asyncAfter(deadline: .now()+2) {}
+                        self.presentationMode.wrappedValue.dismiss()
+                    }) {
+                        NavigationLink(destination: QuestionsView(game: self.game, questionIndex: self.questionIndex + 1)) {
+                            Text(answer.title.base64Decoded()!)
+                                .foregroundColor(.black)
+                                .modifier(CustomFrame(height: 50, strokeColor: .orange))
+                        }
                     }
                 }
+                Spacer()
             }
             .padding()
             .onAppear {
@@ -87,7 +93,7 @@ struct QuestionCardView: View {
         }
         .onTapGesture {
             cardUp = !cardUp
-            
+
         }
     }
     
