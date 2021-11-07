@@ -104,7 +104,7 @@ struct ReadyStartView: View {
     var body: some View {
         VStack {
             if username != "" {
-                NavigationLink(destination: QuestionsView(questionIndex: 0),
+                NavigationLink(destination: QuestionsView(),
                                isActive: $shouldTransit) {
                     Text("I'm ready")
                         .bold()
@@ -114,7 +114,10 @@ struct ReadyStartView: View {
                             self.game.startGame(username: self.username,
                                                 difficulty: self.difficulty,
                                                 category: Int(self.category))
-                            self.shouldTransit = true
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                self.shouldTransit = true
+                            }
                         }
                     
                 }

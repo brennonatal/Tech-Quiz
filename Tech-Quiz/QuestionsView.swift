@@ -27,7 +27,6 @@ struct QuestionsView: View {
     @EnvironmentObject var game: Game
     
     @State var question : Question = Question()
-    @State var questionIndex: Int
     @State var answers : [Answer] = []
     
     @State var tappedAnswer: Bool = false
@@ -38,22 +37,33 @@ struct QuestionsView: View {
                 Spacer()
                 
                 ForEach(self.answers) { answer in
-                    Button(action: {
-//                        checkAnswer(answer)
-//                        DispatchQueue.main.asyncAfter(deadline: .now()+2) {}
-                        self.presentationMode.wrappedValue.dismiss()
-                    }) {
-                        NavigationLink(destination: QuestionsView(questionIndex: self.questionIndex + 1)) {
-                            Text(answer.title.base64Decoded()!)
-                                .foregroundColor(.black)
-                                .modifier(CustomFrame(height: 50, strokeColor: .orange))
-                        }
+                    NavigationLink(destination: QuestionsView(),
+                                   isActive: $tappedAnswer) {
+                        Text(answer.title.base64Decoded()!)
+                            .foregroundColor(.black)
+                            .modifier(CustomFrame(height: 50, strokeColor: .orange))
+                            .onTapGesture {
+                                // checking answer
+                                if answer.isCorrect {
+                                    self.game.score += 1
+                                    // make api call to register point
+                                    markPoint(user: self.game.username)
+                                }
+                                if self.game.isOver() {
+                                    // go to endView
+                                }
+                                // procede to next question
+                                self.game.questionIndex += 1
+                                self.tappedAnswer = true
+                            }
                     }
                 }
                 Spacer()
             }
             .padding()
             .onAppear {
+                self.question = loadQuestion(questions: self.game.questions,
+                                             questionIndex: self.game.questionIndex)
                 self.answers = getAnswers(question: self.question)
             }
             .navigationBarHidden(true)
@@ -94,7 +104,7 @@ struct QuestionCardView: View {
 
 struct QuestionsView_Previews: PreviewProvider {
     static var previews: some View {
-        QuestionsView(questionIndex: 0)
+        QuestionsView()
     }
     
 }

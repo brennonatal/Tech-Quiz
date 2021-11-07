@@ -15,7 +15,7 @@ class Game: ObservableObject {
     @Published var username: String = "player42"
     @Published var score: Int = 0
     @Published var questions : [Question] = []
-//    @Published var questionNumber : Int = 0
+    @Published var questionIndex : Int = 0
     
     init(difficulty: String, category: Int) {
         self.difficulty = difficulty.lowercased()
@@ -58,5 +58,12 @@ class Game: ObservableObject {
         self.username = username
         
         self.getNewQuestions()
+    }
+    
+    func isOver() -> Bool {
+        if self.questionIndex >= 9 {
+            return true
+        }
+        return false
     }
 }
