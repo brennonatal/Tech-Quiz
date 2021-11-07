@@ -29,7 +29,8 @@ struct QuestionsView: View {
     @State var question : Question = Question()
     @State var answers : [Answer] = []
     
-    @State var tappedAnswer: Bool = false
+    @State var shouldTransit: Bool = false
+    @State var isGameOver: Bool = false
     
     var body: some View {
             VStack {
@@ -37,8 +38,8 @@ struct QuestionsView: View {
                 Spacer()
                 
                 ForEach(self.answers) { answer in
-                    NavigationLink(destination: QuestionsView(),
-                                   isActive: $tappedAnswer) {
+                    NavigationLink(destination: getNextView(endView: self.isGameOver),
+                                   isActive: $shouldTransit) {
                         Text(answer.title.base64Decoded()!)
                             .foregroundColor(.black)
                             .modifier(CustomFrame(height: 50, strokeColor: .orange))
@@ -50,11 +51,11 @@ struct QuestionsView: View {
                                     markPoint(user: self.game.username)
                                 }
                                 if self.game.isOver() {
-                                    // go to endView
+                                    self.isGameOver = true
                                 }
                                 // procede to next question
                                 self.game.questionIndex += 1
-                                self.tappedAnswer = true
+                                self.shouldTransit = true
                             }
                     }
                 }

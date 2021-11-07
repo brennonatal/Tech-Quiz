@@ -100,3 +100,9 @@ func markPoint(user: String) {
     task.resume()
 }
 
+func getNextView(endView: Bool) -> AnyView {
+    if endView {
+        return AnyView(EmptyView())
+    }
+    return AnyView(QuestionsView())
+}
