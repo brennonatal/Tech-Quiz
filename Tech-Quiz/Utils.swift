@@ -30,11 +30,13 @@ struct CustomFrame: ViewModifier {
     var strokeColor: Color
     var lineWidth: CGFloat = 3
     var background: Color = .clear
+    var opacity: CGFloat?
     
     func body(content: Content) -> some View {
         content
             .frame(width: self.width, height: self.height, alignment: self.align)
             .padding()
+            .opacity(self.opacity ?? 1)
             .overlay(
                 RoundedRectangle(cornerRadius: 20)
                     .stroke(self.strokeColor, lineWidth: self.lineWidth)

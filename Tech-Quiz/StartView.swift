@@ -42,7 +42,7 @@ struct StartView: View {
                 .pickerStyle(SegmentedPickerStyle())
                 .scaledToFill()
                 .scaleEffect(CGSize(width: 1.0, height: 1.34))
-                .modifier(CustomAnimation(height: 30, background: self.difficultyColor[difficultyIndex], strokeColor: self.difficultyColor[difficultyIndex]))
+                .modifier(CustomFrame(height: 30, strokeColor: self.difficultyColor[difficultyIndex], background: self.difficultyColor[difficultyIndex]))
                 .padding()
                 
                 TitleView()
@@ -50,7 +50,7 @@ struct StartView: View {
                 
                 TextField("Your name", text: $username)
                     .font(.title)
-                    .modifier(CustomFrame(height: 30, strokeColor: .mint))
+                    .modifier(CustomFrame(height: 30, strokeColor: .mint, opacity: 0.9))
                     .multilineTextAlignment(TextAlignment.center)
                 
                 
