@@ -75,4 +75,34 @@ struct CustomAnimation: ViewModifier {
     }
 }
 
+func markPoint(user: String) {
+    guard let url = URL(string: "https://7c2bad50.us-south.apigw.appdomain.cloud/api/placar") else { return }
+    
+    var request = URLRequest(url: url)
+    // preparing for request
+    request.httpMethod = "POST"
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    let body: [String:String] = ["usuario": user]
+    request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: .fragmentsAllowed)
+    
+    let task = URLSession.shared.dataTask(with: request) { data, _, error in
+        guard let data = data, error == nil else {
+            return
+        }
+        do {
+            let response = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+            print("SUCCESS: \(response)")
+        }
+        catch {
+            print("ERROR: \(error)")
+        }
+    }
+    task.resume()
+}
 
+func getNextView(endView: Bool) -> AnyView {
+    if endView {
+        return AnyView(EmptyView())
+    }
+    return AnyView(QuestionsView())
+}

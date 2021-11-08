@@ -42,7 +42,10 @@ struct StartView: View {
                 .pickerStyle(SegmentedPickerStyle())
                 .scaledToFill()
                 .scaleEffect(CGSize(width: 1.0, height: 1.34))
-                .modifier(CustomFrame(height: 30, strokeColor: self.difficultyColor[difficultyIndex], background: self.difficultyColor[difficultyIndex]))
+                .modifier(CustomFrame(height: 30,
+                                      strokeColor: self.difficultyColor[difficultyIndex],
+                                      background: self.difficultyColor[difficultyIndex],
+                                      opacity: 0.9))
                 .padding()
                 
                 TitleView()
@@ -50,7 +53,7 @@ struct StartView: View {
                 
                 TextField("Your name", text: $username)
                     .font(.title)
-                    .modifier(CustomFrame(height: 30, strokeColor: .mint, opacity: 0.9))
+                    .modifier(CustomFrame(height: 30, strokeColor: .mint))
                     .multilineTextAlignment(TextAlignment.center)
                 
                 
@@ -101,7 +104,7 @@ struct ReadyStartView: View {
     var body: some View {
         VStack {
             if username != "" {
-                NavigationLink(destination: QuestionsView(questionIndex: 0),
+                NavigationLink(destination: QuestionsView(),
                                isActive: $shouldTransit) {
                     Text("I'm ready")
                         .bold()
@@ -111,7 +114,10 @@ struct ReadyStartView: View {
                             self.game.startGame(username: self.username,
                                                 difficulty: self.difficulty,
                                                 category: Int(self.category))
-                            self.shouldTransit = true
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                self.shouldTransit = true
+                            }
                         }
                     
                 }
