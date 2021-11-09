@@ -9,15 +9,14 @@ import SwiftUI
 
 
 struct LevelView: View {
-    var title : String
+    var title: String
     
     var body: some View {
-        VStack{
             Text(self.title)
                 .font(.title2)
                 .modifier(CustomFrame(height: 180, strokeColor: .mint))
                 .foregroundColor(.orange)
-        }
+
     }
 }
 
@@ -26,14 +25,16 @@ struct QuestionsView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var game: Game
     
-    @State var question : Question = Question()
-    @State var answers : [Answer] = []
+    @State var question: Question = Question()
+    @State var answers: [Answer] = []
     
     @State var shouldTransit: Bool = false
     @State var isGameOver: Bool = false
+    @State var answerColor: Color = .orange
     
     var body: some View {
             VStack {
+                Spacer()
                 LevelView(title: question.question.base64Decoded()!)
                 Spacer()
                 
@@ -42,20 +43,25 @@ struct QuestionsView: View {
                                    isActive: $shouldTransit) {
                         Text(answer.title.base64Decoded()!)
                             .foregroundColor(.black)
-                            .modifier(CustomFrame(height: 50, strokeColor: .orange))
+                            .modifier(CustomFrame(height: 50, strokeColor: self.answerColor))
                             .onTapGesture {
                                 // checking answer
                                 if answer.isCorrect {
+                                    self.answerColor = .green
                                     self.game.score += 1
                                     // make api call to register point
                                     markPoint(user: self.game.username)
+                                } else {
+                                    self.answerColor = .red
                                 }
                                 if self.game.isOver() {
                                     self.isGameOver = true
                                 }
                                 // procede to next question
                                 self.game.questionIndex += 1
-                                self.shouldTransit = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                    self.shouldTransit = true
+                                }
                             }
                     }
                 }
@@ -69,6 +75,7 @@ struct QuestionsView: View {
             }
             .navigationBarHidden(true)
             .navigationBarBackButtonHidden(true)
+            
     }
 }
 
@@ -82,11 +89,11 @@ struct QuestionCardView: View {
             if cardUp {
                 if rightAns{
                     Text("Right Answer!!")
-                        .modifier(CustomFrame(height: 50, strokeColor: .green))
+                        .modifier(CustomFrame(height: 50, strokeColor: .green, background: .green))
                     
                 } else {
                     Text("Bad Answer!!")
-                        .modifier(CustomFrame(height: 50, strokeColor: .red))
+                        .modifier(CustomFrame(height: 50, strokeColor: .red, background: .red))
                 }
                 
             } else {
