@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct StartView: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var game = Game(difficulty: "easy", category: 0)
     
     @State var username: String = ""
@@ -62,6 +63,7 @@ struct StartView: View {
                         Text(self.categoryOptions[$0])
                     }
                 }
+                .accentColor(.blue)
                 .scaleEffect(CGSize(width: 1.4, height: 1.7))
                 .modifier(CustomFrame(height: 30, strokeColor: .mint))
                 
@@ -72,8 +74,12 @@ struct StartView: View {
                                category: self.categoryIndex)
             }
             .navigationBarHidden(true)
+            .navigationBarBackButtonHidden(true)
         }
         .environmentObject(game)
+        .navigationBarHidden(true)
+        .navigationBarBackButtonHidden(true)
+
     }
 }
 
@@ -100,30 +106,48 @@ struct ReadyStartView: View {
     var difficulty: String
     var category: Int
     @State private var shouldTransit: Bool = false
+    @State private var loading: Bool = false
+    
+    @State private var loadAmount = 0.0
+    let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
     
     var body: some View {
         VStack {
             if username != "" {
                 NavigationLink(destination: QuestionsView(),
                                isActive: $shouldTransit) {
-                    Text("I'm ready")
-                        .bold()
-                        .foregroundColor(.black)
-                        .font(.largeTitle)
-                        .onTapGesture {
-                            self.game.startGame(username: self.username,
-                                                difficulty: self.difficulty,
-                                                category: Int(self.category))
-                            
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                self.shouldTransit = true
+                    if !loading {
+                        Text("I'm ready")
+                            .bold()
+                            .foregroundColor(.black)
+                            .font(.largeTitle)
+                            .modifier(CustomAnimation(height: 60, background: .green, strokeColor: .green))
+                            .onTapGesture {
+                                self.game.startGame(username: self.username,
+                                                    difficulty: self.difficulty,
+                                                    category: Int(self.category))
+                                
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                    self.shouldTransit = true
+                                }
+                                self.loading = true
                             }
-                        }
-                    
+                    } else {
+                        ProgressView(value: loadAmount, total: 10)
+                            .progressViewStyle(.linear)
+                            .accentColor(Color.secondary)
+                            .scaleEffect(x: 1, y: 4, anchor: .center)
+                            .modifier(CustomAnimation(height: 60, background: .green, strokeColor: .green))
+                            .onReceive(timer) { _ in
+                                            if loadAmount < 10 {
+                                                loadAmount += 1
+                                            }
+                                        }
+                    }
                 }
-                .modifier(CustomAnimation(height: 60, background: .green, strokeColor: .green))
+
             } else {
-                Text("Loading...")
+                Text("What's your name?")
                     .font(.title)
                     .bold()
                     .foregroundColor(.gray)
