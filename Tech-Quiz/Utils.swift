@@ -102,7 +102,7 @@ func markPoint(user: String) {
 
 func getNextView(endView: Bool) -> AnyView {
     if endView {
-        return AnyView(EmptyView())
+        return AnyView(EndGameView())
     }
     return AnyView(QuestionsView())
 }
