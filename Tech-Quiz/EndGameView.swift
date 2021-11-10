@@ -14,15 +14,15 @@ struct EndGameView: View {
         VStack {
             Spacer()
             Text("Your final score is:")
-                .font(.title)
+                .font(Font.custom("Orbitron", size: 30))
             Text("\(self.game.score)")
                 .underline()
                 .foregroundColor(.red)
-                .font(.largeTitle)
+                .font(Font.custom("Orbitron", size: 30))
             Spacer()
             NavigationLink(destination: StartView(), label: {
                 Text("Play again")
-                    .font(.largeTitle)
+                    .font(Font.custom("Orbitron", size: 30))
                     .bold()
                     .foregroundColor(.black)
                     .modifier(CustomFrame(height: 100, strokeColor: .green, background: .yellow, opacity: 0.9))

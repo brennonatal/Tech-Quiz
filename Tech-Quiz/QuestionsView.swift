@@ -13,7 +13,7 @@ struct LevelView: View {
     
     var body: some View {
             Text(self.title)
-                .font(.title2)
+            .font(Font.custom("Orbitron", size: 20))
                 .modifier(CustomFrame(height: 180, strokeColor: .mint))
                 .foregroundColor(.orange)
 
@@ -42,6 +42,7 @@ struct QuestionsView: View {
                     NavigationLink(destination: getNextView(endView: self.isGameOver),
                                    isActive: $shouldTransit) {
                         Text(answer.title.base64Decoded()!)
+                            .font(Font.custom("Orbitron", size: 20))
                             .foregroundColor(.black)
                             .modifier(CustomFrame(height: 50, strokeColor: self.answerColor))
                             .onTapGesture {

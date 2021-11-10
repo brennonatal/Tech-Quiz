@@ -89,11 +89,12 @@ struct TitleView: View {
         VStack {
             Text("?")
                 .foregroundColor(.orange)
-                .font(Font.custom("Montserrat-Bold", size: 180))
+                .font(Font.custom("Orbitron", size: 170))
             Text("Tech Quiz")
-                .foregroundColor(.orange)
-                .font(Font.custom("Montserrat-Bold", size: 60))
+                .font(Font.custom("Orbitron", size: 50))
                 .bold()
+                .foregroundColor(Color.init(red: 0.1, green: 0.9 , blue: 0.6))
+
         }
         .modifier(CustomFrame(height: 300, strokeColor: .mint))
     }
@@ -148,9 +149,9 @@ struct ReadyStartView: View {
 
             } else {
                 Text("What's your name?")
-                    .font(.title)
+                    .font(Font.custom("Orbitron", size: 25))
                     .bold()
-                    .foregroundColor(.gray)
+                    .foregroundColor(Color.init(red: 1, green: 0.3, blue: 0.1).opacity(0.7))
                     .modifier(CustomFrame(height: 60, strokeColor: .yellow, background: .yellow))
             }
         }
