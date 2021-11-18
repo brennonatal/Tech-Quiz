@@ -13,9 +13,9 @@ struct LevelView: View {
     
     var body: some View {
             Text(self.title)
-            .font(Font.custom("Orbitron", size: 20))
+                .font(Font.custom("Orbitron", size: 20))
                 .modifier(CustomFrame(height: 180, strokeColor: .mint))
-                .foregroundColor(.orange)
+                .foregroundColor(.black)
 
     }
 }
@@ -35,6 +35,12 @@ struct QuestionsView: View {
     var body: some View {
             VStack {
                 Spacer()
+                HStack {
+                    Spacer()
+                    Text("\(self.game.questionIndex + 1)/10")
+                        .font(Font.custom("Orbitron", size: 18))
+                }
+                
                 LevelView(title: question.question.base64Decoded()!)
                 Spacer()
                 
